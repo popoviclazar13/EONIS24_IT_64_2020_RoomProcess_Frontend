@@ -10,4 +10,4 @@ export class Korisnik {
     passwordHash!: string;
     ulogaId!: number;
     uloga!: Uloga;
-  }
+}
