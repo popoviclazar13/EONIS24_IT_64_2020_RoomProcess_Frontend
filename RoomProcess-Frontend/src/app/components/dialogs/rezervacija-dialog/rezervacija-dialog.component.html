@@ -1,0 +1,66 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje rezervacije </h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Ažuriranje rezervacije: {{data.rezervacijaId}} </h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Brisanje rezervacije: {{data.rezervacijaId}} </h3>
+    <mat-icon id="iconPerson">bookmark_add</mat-icon>
+    <br>
+    <form class="mat-dialog-content" #formControl="ngForm">
+      <div class="form">
+        <mat-form-field class="form-field">
+            <input matInput [matDatepicker]="datumDolaska" placeholder="Datum dolaska" name="datumDolaska"
+                [(ngModel)]="data.datumDolaska" [disabled]="flag==3" required />
+            <mat-datepicker-toggle matSuffix [for]="datumDolaska"></mat-datepicker-toggle>
+            <mat-datepicker #datumDolaska></mat-datepicker> <!--Ovde je bitno staviti ispravan naziv kolone!-->
+        </mat-form-field>
+      </div>
+        <div class="form">
+            <mat-form-field class="form-field">
+                <input
+                  matInput
+                  [matDatepicker]="datumOdlaska"
+                  placeholder="Datum odlaska"
+                  name="datumOdlaska"
+                  [(ngModel)]="data.datumOdlaska"
+                  [disabled]="flag == 3"
+                  required
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="datumOdlaska"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #datumOdlaska></mat-datepicker>
+                <!--Ovde je bitno staviti ispravan naziv kolone!-->
+            </mat-form-field>
+        </div>
+        <div class="form">
+          <span>Potvrda rezervacije: </span>
+          <mat-checkbox name="potvrda" [disabled]="flag == 3" [(ngModel)]="data.potvrda"></mat-checkbox>
+        </div>
+       <div class="form">
+        <mat-form-field class="form-field">
+          <mat-select placeholder="Korisnik" name="korsinik" [(ngModel)]="data.korisnikId" [disabled]="flag==3">
+            <mat-option *ngFor="let korisnik of korisnici" [value]="korisnik.korisnikId">
+              {{korisnik.ime}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form">
+        <mat-form-field class="form-field">
+          <mat-select placeholder="Objekat" name="objekat" [(ngModel)]="data.objekatId" [disabled]="flag==3">
+            <mat-option *ngFor="let objekat of objekti" [value]="objekat.objekatId">
+              {{objekat.objekatNaziv}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <div class="mat-dialog-actions">
+        <button *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Sačuvaj</button>
+        <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Modifikuj</button>
+        <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Obriši</button>
+        <button matButton (click)="cancel()">Poništi</button>
+    </div>
+</div>
+

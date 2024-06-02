@@ -1,0 +1,28 @@
+<div class="parent">
+    <header>
+        <div class="container">
+          <div class="logo"><span class="icon">
+            <mat-icon>apartment</mat-icon>
+          </span>Admin Dashbord</div>
+          <nav>
+            <ul>
+              <li><a href="korisnik">Korisnici</a></li>
+              <li><a href="objekat">Objekti</a></li>
+              <li><a href="rezervacija">Rezervacije</a></li>
+              <li><a href="popust">Popusti</a></li>
+              <li><a href="tipObjekta">Tip Objekta</a></li>
+              <li><a href="recenzija">Recenzije</a></li>
+              <li><a href="uloga">Uloge</a></li>
+              <li><a href="oprema">Oprema</a></li>
+            </ul>
+          </nav>
+          <div class="auth" (click)="logout()">
+            <nav>
+              <ul>
+                <li><a *ngIf="isAdmin" href="home">Hello, Admin</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>   
+</div>

@@ -25,7 +25,7 @@ export class TipObjektaService {
         return this.httpClient.get<TipObjekta>(`${this.BASE_URL}/${id}`)
     }
     public addTipObjekta(tipObjekta:TipObjekta):Observable<TipObjekta>{
-        return this.httpClient.post<TipObjekta>(`${this.BASE_URL}`, tipObjekta)
+        return this.httpClient.post<TipObjekta>(`${this.BASE_URL}`, tipObjekta, { responseType: 'text' as 'json' })// mora zato sto ne prepoznaje text kao JSON
     }
     
     public updateTipObjekta(tipObjekta:TipObjekta):Observable<TipObjekta>{

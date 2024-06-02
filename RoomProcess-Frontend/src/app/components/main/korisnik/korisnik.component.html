@@ -1,83 +1,113 @@
-<div class="container mat-elavation-z8">
-    <mat-form-field id="pretraga">
-      <input
-        matInput
-        placeholder="Pretraga Korisnika"
-        name="pretraga"
-        (keyup)="applyFilter($event)"
-      />
-      <!--Ovo je dodato zbog pretrage, filtriranje po svakoj vrednosti!-->
-      <mat-icon matPrefix id="icon">search</mat-icon>
-      <!--Ovo matPrefix omogucava da stoji u jednom redu-->
-      <mat-icon matSuffix id="iconRed">person</mat-icon>
-    </mat-form-field>
-    <mat-table #table [dataSource]="dataSource" class="mat-cell" matSort>
-      <!--ID-->
-      <ng-container matColumnDef="KorisnikId">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell
-        ><!--Ova direktiva matHead-->
-        <mat-cell *matCellDef="let row">{{ row.korisnikId }}</mat-cell
-        ><!--Interpolacija sa dve viticaste zagrade, sluzi za izvlacenje podataka-->
-      </ng-container>
-      <!--Ime-->
-      <ng-container matColumnDef="ime">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Ime</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.imeKorisnika }}</mat-cell>
-      </ng-container>
-      <!-- Prezime -->
-      <ng-container matColumnDef="prezime">
-        <mat-header-cell *matHeaderCellDef mat-sort-header
-          >Prezime</mat-header-cell
-        >
-        <mat-cell *matCellDef="let row">{{ row.prezimeKorisnika }}</mat-cell>
-      </ng-container>
-      <!-- Email-->
-      <ng-container matColumnDef="EmailKorisnika">
-        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.emailKorisnika }}</mat-cell>
-      </ng-container>
-      <!-- Pozicija-->
-      <ng-container matColumnDef="Pozicija">
-        <mat-header-cell *matHeaderCellDef>Pozicija</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{
-          getUlogaForDisplay(row.pozicija)
-        }}</mat-cell>
-      </ng-container>
-      <!-- Action Buttons -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="accent" (click)="openDialog(1)">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row; let i = index">
-          <button mat-icon-button color="primary" (click)="openDialog(2, row)">
-            <mat-icon color="primary" aria-label="Edit">edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="openDialog(3, row)">
-            <mat-icon color="warn" aria-label="Delete">delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row
-      ><!--Poslednja 2 rowa sluze za podesavanje redova-->
-      <mat-row
-        style="cursor: pointer"
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="selectRow(row)"
-      >
-      </mat-row>
-    </mat-table>
-  
-    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
-    </mat-paginator>
-  
-    <!--Zbog selectRow-->
-    <div class="container mat-elavation-z8">
-      <!--pozivamo select druge komponente-->
-      <!--<app-rociste *ngIf="parentSelectedUcesnik" [childSelectedUcesnik]="parentSelectedUcesnik">
-  
-        </app-rociste>-->
+<div class="parent">
+  <header>
+    <div class="container">
+      <div class="logo"><span class="icon">
+        <mat-icon>apartment</mat-icon>
+      </span>Admin Dashbord</div>
+      <nav>
+        <ul>
+          <li><a href="adminDashbord">Dashbord</a></li>
+          <li><a href="korisnik">Korisnici</a></li>
+            <li><a href="objekat">Objekti</a></li>
+            <li><a href="rezervacija">Rezervacije</a></li>
+            <li><a href="popust">Popusti</a></li>
+            <li><a href="tipObjekta">Tip Objekta</a></li>
+            <li><a href="recenzija">Recenzije</a></li>
+            <li><a href="uloga">Uloge</a></li>
+            <li><a href="oprema">Oprema</a></li>
+        </ul>
+      </nav>
+      <div class="auth">
+        <a *ngIf="isAdmin">Hello, Admin</a>
+      </div>
     </div>
-  </div>
+  </header>
+  <div class="container mat-elavation-z8">
+      <mat-form-field id="pretraga">
+        <input
+          matInput
+          placeholder="Pretraga Korisnika"
+          name="pretraga"
+          (keyup)="applyFilter($event)"
+        />
+        <!--Ovo je dodato zbog pretrage, filtriranje po svakoj vrednosti!-->
+        <mat-icon matPrefix id="icon">search</mat-icon>
+        <!--Ovo matPrefix omogucava da stoji u jednom redu-->
+        <mat-icon matSuffix id="iconRed">person</mat-icon>
+      </mat-form-field>
+      <mat-table #table [dataSource]="dataSource" class="mat-cell" matSort>
+        <!--ID-->
+        <ng-container matColumnDef="korisnikId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell
+          ><!--Ova direktiva matHead-->
+          <mat-cell *matCellDef="let row">{{ row.korisnikId }}</mat-cell
+          ><!--Interpolacija sa dve viticaste zagrade, sluzi za izvlacenje podataka-->
+        </ng-container>
+        <!--Ime-->
+        <ng-container matColumnDef="ime">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Ime</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.ime }}</mat-cell>
+        </ng-container>
+        <!-- Prezime -->
+        <ng-container matColumnDef="prezime">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Prezime</mat-header-cell
+          >
+          <mat-cell *matCellDef="let row">{{ row.prezime }}</mat-cell>
+        </ng-container>
+        <!-- Email-->
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.email }}</mat-cell>
+        </ng-container>
+        <!-- Sifra-->
+        <ng-container matColumnDef="password">
+          <mat-header-cell *matHeaderCellDef>Password</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.password }}</mat-cell>
+        </ng-container>
+        <!-- Pozicija-->
+        <ng-container matColumnDef="ulogaId">
+          <mat-header-cell *matHeaderCellDef>Uloga</mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="getColorForDisplay(row.ulogaId)">{{
+            findKorisnik(row.ulogaId)
+          }}</mat-cell>
+        </ng-container>
+        <!-- Action Buttons -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="accent" (click)="openDialog(1)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index">
+            <button mat-icon-button color="primary" (click)="openDialog(2, row)">
+              <mat-icon color="primary" aria-label="Edit">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="openDialog(3, row)">
+              <mat-icon color="warn" aria-label="Delete">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row
+        ><!--Poslednja 2 rowa sluze za podesavanje redova-->
+        <mat-row
+          style="cursor: pointer"
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="selectRow(row)"
+        >
+        </mat-row>
+      </mat-table>
+    
+      <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+      </mat-paginator>
+    
+      <!--Zbog selectRow-->
+      <div class="container mat-elavation-z8">
+        <!--pozivamo select druge komponente-->
+        <!--<app-rociste *ngIf="parentSelectedUcesnik" [childSelectedUcesnik]="parentSelectedUcesnik">
+    
+          </app-rociste>-->
+      </div>
+    </div>
+</div>
   

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TipObjektaComponent } from './tip-objekta.component';
+import { VlasnikDashbordComponent } from './vlasnik-dashbord.component';
 
-describe('TipObjektaComponent', () => {
-  let component: TipObjektaComponent;
-  let fixture: ComponentFixture<TipObjektaComponent>;
+describe('VlasnikDashbordComponent', () => {
+  let component: VlasnikDashbordComponent;
+  let fixture: ComponentFixture<VlasnikDashbordComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TipObjektaComponent]
+      imports: [VlasnikDashbordComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TipObjektaComponent);
+    fixture = TestBed.createComponent(VlasnikDashbordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

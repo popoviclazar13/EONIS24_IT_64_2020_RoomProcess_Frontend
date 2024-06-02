@@ -27,7 +27,7 @@ export class RecenzijaService {
         return this.httpClient.get<Recenzija>(`${this.BASE_URL}/${id}`)
     }
     public addRecenzija(recenzija:Recenzija):Observable<Recenzija>{
-        return this.httpClient.post<Recenzija>(`${this.BASE_URL}`, recenzija)
+        return this.httpClient.post<Recenzija>(`${this.BASE_URL}`, recenzija, { responseType: 'text' as 'json' })// mora zato sto ne prepoznaje text kao JSON
     }
     
     public updateRecenzija(recenzija:Recenzija):Observable<Recenzija>{

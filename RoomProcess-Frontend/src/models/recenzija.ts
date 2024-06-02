@@ -9,7 +9,7 @@ export class Recenzija {
     cistoca!: number;
     osoblje!: number;
     sadrzaj!: number;
-    cenaKvaliteta!: number;
+    cenaKvalitet!: number;
     ocena!: number;
     korisnikId!: number;
     korisnik!: Korisnik;

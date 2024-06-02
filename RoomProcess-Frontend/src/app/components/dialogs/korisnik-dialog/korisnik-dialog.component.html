@@ -1,1 +1,45 @@
-<p>korisnik-dialog works!</p>
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje korisnika </h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Ažuriranje korisnika: {{data.ime}} </h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Brisanje korisnika: {{data.ime}} </h3>
+    <mat-icon id="iconPerson">person</mat-icon>
+
+    <form class="mat-dialog-content" #formControl="ngForm">
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Ime" name="Ime" [disabled]="flag==3" [(ngModel)]="data.ime" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Prezime" name="Prezime" [disabled]="flag==3" [(ngModel)]="data.prezime" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Email" name="Email" [disabled]="flag==3" [(ngModel)]="data.email" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Sifra" name="password" [disabled]="flag==3" [(ngModel)]="data.password" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field class="form-field">
+          <mat-select placeholder="Uloga" name="uloga" [(ngModel)]="data.ulogaId" [disabled]="flag==3">
+            <mat-option *ngFor="let uloga of uloge" [value]="uloga.ulogaId">
+              {{uloga.ulogaNaziv}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <div class="mat-dialog-actions">
+        <button *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Sačuvaj</button>
+        <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Modifikuj</button>
+        <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Obriši</button>
+        <button matButton (click)="cancel()">Poništi</button>
+    </div>
+</div>

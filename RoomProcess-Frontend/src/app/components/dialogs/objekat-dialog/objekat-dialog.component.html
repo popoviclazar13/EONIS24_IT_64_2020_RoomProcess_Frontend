@@ -1,0 +1,74 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje objekta </h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Ažuriranje objekta: {{data.objekatNaziv}} </h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Brisanje objekta: {{data.objekatNaziv}} </h3>
+    <mat-icon id="iconPerson">apartment</mat-icon>
+    <br>
+    <form class="mat-dialog-content" #formControl="ngForm">
+      <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Naziv" name="objekatNaziv" [disabled]="flag==3" [(ngModel)]="data.objekatNaziv" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Adresa" name="adresa" [disabled]="flag==3" [(ngModel)]="data.adresa" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Grad" name="grad" [disabled]="flag==3" [(ngModel)]="data.grad" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Cena" name="cena" [disabled]="flag==3" [(ngModel)]="data.cena" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="X Koordinata" name="x" [disabled]="flag==3" [(ngModel)]="data.x" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Y Koordinata" name="y" [disabled]="flag==3" [(ngModel)]="data.y" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field class="form-field">
+          <mat-select placeholder="Korisnik" name="korsinik" [(ngModel)]="data.korisnikId" [disabled]="flag==3">
+            <mat-option *ngFor="let korisnik of korisnici" [value]="korisnik.korisnikId">
+              {{korisnik.ime}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form">
+        <mat-form-field class="form-field">
+          <mat-select placeholder="Tip Objekta" name="tipObjekta" [(ngModel)]="data.tipObjektaId" [disabled]="flag==3">
+            <mat-option *ngFor="let tipObjekta of tipovi" [value]="tipObjekta.tipObjektaId">
+              {{tipObjekta.tipObjektaNaziv}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form">
+        <mat-form-field class="form-field">
+          <mat-select placeholder="Popust" name="popust" [(ngModel)]="data.popustId" [disabled]="flag==3">
+            <mat-option *ngFor="let popust of popusti" [value]="popust.popustId">
+              {{popust.popustNaziv}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <div class="mat-dialog-actions">
+        <button *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Sačuvaj</button>
+        <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Modifikuj</button>
+        <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Obriši</button>
+        <button matButton (click)="cancel()">Poništi</button>
+    </div>
+</div>
+

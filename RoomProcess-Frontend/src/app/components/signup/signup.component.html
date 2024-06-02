@@ -1,0 +1,70 @@
+<header>
+  <div class="container">
+    <div class="logo">RoomProcess</div>
+    <nav>
+      <ul>
+        <li><a href="home">Home</a></li>
+        <li><a href="#">Stays</a></li>
+        <li><a href="#">Flights</a></li>
+        <li><a href="#">Car Rentals</a></li>
+        <li><a href="#">Attractions</a></li>
+        <li><a href="#">Airport Taxis</a></li>
+      </ul>
+    </nav>
+    <div class="auth">
+    </div>
+  </div>
+</header>
+<div class="form">
+      
+    <ul class="tab-group">
+      <li class="tab active"><a href="signup">Sign Up</a></li>
+      <li class="tab"><a href="login">Log In</a></li>
+    </ul>
+    
+    <div class="tab-content">
+      <div id="signup">   
+        <h1>Sign Up for Free</h1>
+        
+        <form action="/" method="post">
+        
+        <div class="top-row">
+          <div class="field-wrap">
+            <span class="icon">
+              <mat-icon>person</mat-icon>
+            </span>
+            <input name="ime" [(ngModel)]="registerObj.ime" placeholder="First Name" type="text" required autocomplete="off" />
+          </div>
+      
+          <div class="field-wrap">
+            <span class="icon">
+              <mat-icon>person</mat-icon>
+            </span>
+            <input name="prezime" [(ngModel)]="registerObj.prezime" placeholder="Last Name" type="text"required autocomplete="off"/>
+          </div>
+        </div>
+  
+        <div class="field-wrap">
+          <span class="icon">
+            <mat-icon>person</mat-icon>
+          </span>
+          <input name="email" [(ngModel)]="registerObj.email" placeholder="Email" type="email"required autocomplete="off"/>
+        </div>
+        
+        <div class="field-wrap">
+          <span class="icon">
+            <mat-icon>lock</mat-icon>
+          </span>
+          <input name="password" [(ngModel)]="registerObj.password" placeholder="Password" type="password"required autocomplete="off"/>
+        </div>
+        
+        <button type="submit" class="button button-block" (click)="onSignUp()">Get Started</button>
+        
+        </form>
+  
+      </div>
+      
+      
+    </div><!-- tab-content -->
+    
+  </div> 

@@ -25,7 +25,7 @@ export class PopustService {
         return this.httpClient.get<Popust>(`${this.BASE_URL}/${id}`)
     }
     public addPopust(popust:Popust):Observable<Popust>{
-        return this.httpClient.post<Popust>(`${this.BASE_URL}`, popust)
+        return this.httpClient.post<Popust>(`${this.BASE_URL}`, popust, { responseType: 'text' as 'json' })// mora zato sto ne prepoznaje text kao JSON
     }
     
     public updatePopust(popust:Popust):Observable<Popust>{

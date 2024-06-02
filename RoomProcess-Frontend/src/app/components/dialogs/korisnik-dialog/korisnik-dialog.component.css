@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 600px;
+    align-items: center;
+  }
+  
+  .form {
+    display: flex;
+
+  }
+  
+  .form-field{
+    text-align: center;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  
+  .mat-dialog-actions{
+    margin-top: 20px;
+    padding: 20px;
+  }
+  
+  .mat-form-field {
+    font-size: 16px;
+    flex-grow: 1;
+  }
+  
+  h3{
+    text-align: center;
+  }
+
+  #btnFleg{
+    background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding-left: 35%;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  border: #951414;
+  border-radius: 8px;
+  font-size: 16px;
+  }
+
+  #iconPerson{
+    color: #951414;
+    text-align: center;
+    padding: 10px;
+    font-size: xx-large;
+  }
+

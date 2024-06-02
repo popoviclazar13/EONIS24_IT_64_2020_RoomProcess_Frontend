@@ -8,6 +8,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { Uloga } from '../../../../models/uloga';
 import { KorisnikDialogComponent } from '../../dialogs/korisnik-dialog/korisnik-dialog.component';
+import { Router } from '@angular/router';
+import { AuthServiceService } from '../../../../services/auth-service.service';
+import { UlogaService } from '../../../../services/uloga.service';
 
 @Component({
   selector: 'app-korisnik',
@@ -26,6 +29,7 @@ export class KorisnikComponent implements OnInit, OnDestroy {
   ]; // ovde smo rekli sta cemo sve da prikazemo
 
   dataSource!: MatTableDataSource<Korisnik>; // ovo ce na sluziti da upisujemo nove vr i menjamo postojece
+  isAdmin: boolean = false; // Dodajte promenljivu za proveru admina
 
   subscription!: Subscription;
 
@@ -37,17 +41,26 @@ export class KorisnikComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator; // za paginator
 
   parentSelectedKorisnik!: Korisnik; //ovo je zbog selectRow dodato
+  ulogaMap: Map<number, string> = new Map();
 
   constructor(
     private korisnikService: KorisnikService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,    //Zbog turiranja
+    private authService: AuthServiceService, // Za admina
+    private ulogaService: UlogaService
   ) {}
+
+  goToAboutPage() {
+    this.router.navigate(['korisnik']);
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
   ngOnInit(): void {
     this.loadData();
+    this.loadMappings();
   }
 
   //sa ovom metodom povezujemo front i bekend
@@ -65,27 +78,36 @@ export class KorisnikComponent implements OnInit, OnDestroy {
         console.log(error.name + ' ' + error.message);
       };
   }
+  private loadMappings(): void {
+    // Pretpostavka je da ovi servisi postoje i vraćaju Observable sa mapom ili listom
+    this.ulogaService.getAllUloga().subscribe(data => {
+      data.forEach((uloga: any) => {
+        this.ulogaMap.set(uloga.ulogaId, uloga.ulogaNaziv);
+      });
+    });
+  }
 
   public openDialog(flag: number, korisnik?: Korisnik): void {
     const dialogRef = this.dialog.open(KorisnikDialogComponent, {
       data: korisnik ? korisnik : new Korisnik(),
     });
     dialogRef.componentInstance.flag = flag;
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == 1) {
-        this.loadData();
-      }
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadData();      
     });
   }
 
-  public getUlogaForDisplay(uloga: Uloga) {
-    const ulogaValue = uloga.ulogaId;
-    if(ulogaValue == 1)
-      return "Admin";
-    if(ulogaValue == 2)
-      return "Vlasnik";
+  findKorisnik(korisnikId: number){
+    return this.ulogaMap.get(korisnikId) || 'Nepoznato';
+  }
+
+  public getColorForDisplay(int: number){
+    if(int == 1)
+      return "Red";
+    if(int == 2)
+      return "Yellow";
     else
-    return "Korisnik";
+    return "Green";
   }
 
   public selectRow(row: Korisnik): void {
@@ -102,4 +124,14 @@ export class KorisnikComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filter; // dodeljujemo vrednost datesource filter
   }
 
+  //Za admina 
+  checkAdminRole(): void {
+    // Pozovite servis AuthServiceService da dobijete ulogu korisnika
+    const role = this.authService.getUserRole();
+
+    // Proverite da li je uloga admin
+    if (role === 1) {
+      this.isAdmin = true; // Postavite isAdmin na true ako je korisnik admin
+    }
+  }
 }

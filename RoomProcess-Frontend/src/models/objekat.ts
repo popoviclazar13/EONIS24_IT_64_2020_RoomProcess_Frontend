@@ -2,6 +2,11 @@ import { Popust } from './popust';
 import { Korisnik } from "./korisnik";
 import { TipObjekta } from "./tipObjekta";
 
+export class Slika {
+  slikaId!: number;
+  urlSlike!: string;
+}
+
 export class Objekat {
     objekatId!: number;
     objekatNaziv!: string;
@@ -16,4 +21,5 @@ export class Objekat {
     tipObjekta!: TipObjekta;
     popustId!: number;
     popust!: Popust;
+    slike: Slika[] = []; // Dodajte polje za slike
   }

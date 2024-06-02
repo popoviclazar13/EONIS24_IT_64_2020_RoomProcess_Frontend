@@ -25,7 +25,7 @@ export class UlogaService {
         return this.httpClient.get<Uloga>(`${this.BASE_URL}/${id}`)
     }
     public addUloga(uloga:Uloga):Observable<Uloga>{
-        return this.httpClient.post<Uloga>(`${this.BASE_URL}`, uloga)
+        return this.httpClient.post<Uloga>(`${this.BASE_URL}`, uloga, { responseType: 'text' as 'json' })// ovo dodato zato sto ne prepoznaje da je text koji vraca backend json format
     }
     
     public updateUloga(uloga:Uloga):Observable<Uloga>{

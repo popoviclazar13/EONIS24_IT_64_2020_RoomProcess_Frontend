@@ -27,7 +27,7 @@ export class RezervacijaService {
         return this.httpClient.get<Rezervacija>(`${this.BASE_URL}/${id}`)
     }
     public addRezervacija(rezervacija:Rezervacija):Observable<Rezervacija>{
-        return this.httpClient.post<Rezervacija>(`${this.BASE_URL}`, rezervacija)
+        return this.httpClient.post<Rezervacija>(`${this.BASE_URL}`, rezervacija, { responseType: 'text' as 'json' })// mora zato sto ne prepoznaje text kao JSON
     }
     
     public updateRezervacija(rezervacija:Rezervacija):Observable<Rezervacija>{

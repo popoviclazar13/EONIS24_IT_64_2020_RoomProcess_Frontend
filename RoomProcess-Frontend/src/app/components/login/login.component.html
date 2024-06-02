@@ -1,0 +1,55 @@
+<header>
+  <div class="container">
+    <div class="logo">RoomProcess</div>
+    <nav>
+      <ul>
+        <li><a href="home">Home</a></li>
+        <li><a href="#">Stays</a></li>
+        <li><a href="#">Flights</a></li>
+        <li><a href="#">Car Rentals</a></li>
+        <li><a href="#">Attractions</a></li>
+        <li><a href="#">Airport Taxis</a></li>
+      </ul>
+    </nav>
+    <div class="auth">
+    </div>
+  </div>
+</header>
+<div class="form">
+      
+  <ul class="tab-group">
+    <li class="tab"><a href="signup">Sign Up</a></li>
+    <li class="tab active"><a href="login">Log In</a></li>
+  </ul>
+  
+  <div class="tab-content">
+    <div>   
+      <h1>Welcome Back!</h1>
+      
+      <form action="/" method="post">     
+      <div class="field-wrap">
+        <span class="icon">
+          <mat-icon>person</mat-icon>
+        </span>
+        <input name="email" [(ngModel)]="loginObj.email" placeholder="Email Address" type="email" required autocomplete="off"/>
+      </div>
+      
+      <div class="field-wrap">
+        <span class="icon">
+          <mat-icon>lock</mat-icon>
+        </span>
+        <input name="password" [(ngModel)]="loginObj.password" placeholder="Password" type="password" required autocomplete="off"/>
+      </div>
+      
+      <p class="forgot"><a href="#">Forgot Password?</a></p>
+      
+      <button type="button" class="button button-block" (click)="onLogin()">Log In</button>
+      
+      </form>
+
+    </div>
+    
+    
+  </div><!-- tab-content -->
+  
+</div> <!-- /form -->

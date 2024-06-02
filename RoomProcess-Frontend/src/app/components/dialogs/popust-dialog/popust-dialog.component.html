@@ -1,0 +1,29 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje Popusta </h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Ažuriranje Popusta: {{data.popustNaziv}} </h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Brisanje Popusta: {{data.popustNaziv}} </h3>
+    <mat-icon id="iconPerson">construction</mat-icon>
+
+    <form class="mat-dialog-content" #formControl="ngForm">
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Popust" name="popustNaziv" [disabled]="flag==3" [(ngModel)]="data.popustNaziv" required />
+        </mat-form-field>
+       </div>
+       <div class="form">
+        <mat-form-field>
+            <input matInput placeholder="Iznos u %" name="popustIznos" [disabled]="flag==3" [(ngModel)]="data.popustIznos" required />
+        </mat-form-field>
+       </div>
+    </form>
+
+    <div class="mat-dialog-actions">
+        <button *ngIf="flag == 1" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="add()">Sačuvaj</button>
+        <button matButton *ngIf="flag == 2" type="submit" mat-dialog-close="1" [disabled]="!formControl.valid" (click)="update()">Modifikuj</button>
+        <button matButton *ngIf="flag == 3" mat-dialog-close="1" (click)="delete()">Obriši</button>
+        <button matButton (click)="cancel()">Poništi</button>
+    </div>
+</div>
+
+
+

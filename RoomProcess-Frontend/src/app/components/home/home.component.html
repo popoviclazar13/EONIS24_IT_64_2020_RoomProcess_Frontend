@@ -1,0 +1,71 @@
+<div class="parent">
+    <header>
+        <div class="container">
+          <div class="logo"><span class="icon">
+            <mat-icon>apartment</mat-icon>
+          </span>RoomProcess</div>
+          <nav>
+            <ul>
+              <li><a href="home">Home</a></li>
+              <li><a href="dashbord">Stays</a></li>
+              <li><a href="#">Flights</a></li>
+              <li><a href="#">Car Rentals</a></li>
+              <li><a href="#">Attractions</a></li>
+              <li><a href="#">Airport Taxis</a></li>
+            </ul>
+          </nav>
+          <div class="auth">
+            <a href="signup">Sign Up</a>
+            <a href="login">Log In</a>
+          </div>
+        </div>
+      </header>
+    
+      <section class="hero">
+        <div class="container">
+          <h1>Find your next stay</h1>
+          <form class="search-form" (submit)="onSearch()">
+            <div class="input-icon">
+              <mat-icon>bed</mat-icon>
+              <input type="text" placeholder="Where are you going?" [(ngModel)]="searchQuery" name="searchQuery">
+            </div>
+            <input type="date">
+            <input type="date">
+            <div class="input-icon">
+              <mat-icon>person</mat-icon>
+              <input type="text" placeholder="Guests" min="1">
+            </div>
+            <button type="submit">Search</button>
+          </form>
+        </div>
+      </section>
+    
+      <section class="features">
+        <div class="container">
+          <h2>Explore</h2>
+          <div class="feature-cards">
+            <div class="card" [routerLink]="['/dashbord']" [queryParams]="{ type: 'tipObjekta', id: 5 }">
+              <img src="https://www.kayak.co.uk/news/wp-content/uploads/sites/5/2023/08/THEME_HOTEL_SIGN_FIVE_STARS_FACADE_BUILDING_GettyImages-1320779330-3.jpg" alt="Feature 1">
+              <h3>Hotel</h3>
+            </div>
+            <div class="card" [routerLink]="['/dashbord']" [queryParams]="{ type: 'tipObjekta', id: 1 }">
+              <img src="https://www.udr.com/globalassets/corporate/homepage/homepage_q1_2024_1900_2-min.jpg" alt="Feature 2">
+              <h3>Apartment</h3>
+            </div>
+            <div class="card" [routerLink]="['/dashbord']" [queryParams]="{ type: 'tipObjekta', id: 3 }">
+              <img src="https://www.gradnja.rs/wp-content/uploads/2022/02/luksuzne-vikendice-srbija-izajmljivanje-gradnja.rs_.jpg" alt="Feature 3">
+              <h3>Cottage</h3>
+            </div>
+            <div class="card" [routerLink]="['/dashbord']" [queryParams]="{ type: 'tipObjekta', id: 2 }">
+              <img src="https://static.vecteezy.com/system/resources/previews/023/308/053/non_2x/ai-generative-exterior-of-modern-luxury-house-with-garden-and-beautiful-sky-photo.jpg" alt="Feature 4">
+              <h3>House</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <footer>
+        <div class="container">
+        </div>
+      </footer>
+</div>

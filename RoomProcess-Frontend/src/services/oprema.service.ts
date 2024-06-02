@@ -26,7 +26,7 @@ export class OpremaService {
         return this.httpClient.get<Oprema>(`${this.BASE_URL}/${id}`)
     }
     public addOprema(oprema:Oprema):Observable<Oprema>{
-        return this.httpClient.post<Oprema>(`${this.BASE_URL}`, oprema)
+        return this.httpClient.post<Oprema>(`${this.BASE_URL}`, oprema, { responseType: 'text' as 'json' })// mora zato sto ne prepoznaje text kao JSON
     }
     
     public updateOprema(oprema:Oprema):Observable<Oprema>{

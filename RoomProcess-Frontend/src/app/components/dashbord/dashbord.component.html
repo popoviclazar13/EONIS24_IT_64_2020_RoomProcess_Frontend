@@ -1,0 +1,100 @@
+<div class="parent">
+  <header>
+    <div class="container">
+      <div class="logo"><span class="icon">
+        <mat-icon>apartment</mat-icon>
+      </span>RoomProcess</div>
+      <nav>
+        <ul>
+          <li><a routerLink="/home">Home</a></li>
+          <li><a routerLink="/stays">Stays</a></li>
+          <li><a routerLink="#">Flights</a></li>
+          <li><a routerLink="#">Car Rentals</a></li>
+          <li><a routerLink="#">Attractions</a></li>
+          <li><a routerLink="#">Airport Taxis</a></li>
+          <li *ngIf="isLoggedIn()">Welcome, {{ userName }}</li>
+          <li *ngIf="isLoggedIn()"><button (click)="logout()">LogOff</button></li>
+          <li *ngIf="!isLoggedIn()"><a routerLink="/home">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="features">
+    <div class="container">
+      <h2>Objekti</h2>
+      <div class="filter-and-cards">
+        <!-- Kolona za checkboxove -->
+        <div class="filter">
+          <button (click)="resetFilters()">Reset Filters</button>
+          <h3>Tip Objekta:</h3>
+          <div *ngFor="let tipObjekta of tipObjekta">
+            <label>
+              <input type="radio" name="tipObjektaRadio" [value]="{ type: 'tipObjekta', id: tipObjekta.tipObjektaId}" [(ngModel)]="selectedId" (change)="onRadioChange()"> {{ tipObjekta.tipObjektaNaziv }}
+            </label>
+          </div>
+          <br>
+          <h3>Ocena:</h3>
+          <label><input type="checkbox" [(ngModel)]="lokacijaChecked"> Lokacija</label>
+          <select *ngIf="lokacijaChecked">
+            <option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</option>
+          </select>
+          <label><input type="checkbox" [(ngModel)]="cistocaChecked"> Cistoca</label>
+          <select *ngIf="cistocaChecked">
+            <option *ngFor="let ratingC of ratings" [value]="ratingC">{{ ratingC }}</option>
+          </select>
+          <label><input type="checkbox" [(ngModel)]="osobljeChecked"> Osoblje</label>
+          <select *ngIf="osobljeChecked">
+            <option *ngFor="let ratingO of ratings" [value]="ratingO">{{ ratingO }}</option>
+          </select>
+          <label><input type="checkbox" [(ngModel)]="sadrzajChecked"> Sadrzaj</label>
+          <select *ngIf="sadrzajChecked">
+            <option *ngFor="let ratingS of ratings" [value]="ratingS">{{ ratingS }}</option>
+          </select>
+          <label><input type="checkbox" [(ngModel)]="odnosCiKChecked"> Odnos cene i kvaliteta</label>
+          <select *ngIf="odnosCiKChecked">
+            <option *ngFor="let ratingK of ratings" [value]="ratingK">{{ ratingK }}</option>
+          </select>
+          <br>
+        <h3>Popust :</h3>
+          <div *ngFor="let popust of popusti">
+            <label>
+              <input type="radio" name="popustRadio" [value]="{ type: 'popust', id: popust.popustId }" [(ngModel)]="selectedId" (change)="onRadioChange()"> {{ popust.popustNaziv }}
+            </label>
+          </div>
+        </div>
+        <!-- Kolona za kartice objekata -->
+        <div class="feature-cards">
+          <!-- Prikaz objekata iz baze -->
+          <div class="card" *ngFor="let objekat of dataSource">
+            <div class="card">
+              <div class="card-header">
+                <h3>{{ objekat.objekatNaziv }}</h3>
+                <p>{{ objekat.grad }}</p>
+              </div>
+              <div class="card-body">
+                <div class="image">
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgzbS8WgQea2y6rCWVmuaMiQhKedm3QrpO4w&s">
+                </div>
+                <div class="details">
+                  <p>{{ objekat.adresa }}</p>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p>Cena: {{ objekat.cena }}</p>
+                <p>Ocena: {{ getOcenaRecenzije(objekat.objekatId) }}</p>
+                <button (click)="rezervisi(objekat.objekatId)">Rezerviši</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <!-- Footer content -->
+    </div>
+  </footer>
+</div>

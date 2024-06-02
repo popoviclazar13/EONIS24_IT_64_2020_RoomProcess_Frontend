@@ -32,7 +32,7 @@ export class ObjekatService {
         return this.httpClient.get<Objekat>(`${this.BASE_URL}/${id}`)
     }
     public addObjekat(objekat:Objekat):Observable<Objekat>{
-        return this.httpClient.post<Objekat>(`${this.BASE_URL}`, objekat)
+        return this.httpClient.post<Objekat>(`${this.BASE_URL}`, objekat, { responseType: 'text' as 'json' })// mora zato sto ne prepoznaje text kao JSON
     }
     
     public updateObjekat(objekat:Objekat):Observable<Objekat>{
