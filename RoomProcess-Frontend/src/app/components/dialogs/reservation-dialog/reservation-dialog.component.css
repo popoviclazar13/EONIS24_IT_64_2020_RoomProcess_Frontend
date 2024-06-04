@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.dialog-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Promenjena širina na 100% */
+    max-width: 900px; /* Maksimalna širina postavljena na 800 piksela */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: auto;
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.dialog-content .card {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.dialog-content .card .card-header {
+    background-color: #f9f9f9;
+    padding: 10px;
+    text-align: center;
+}
+
+.dialog-content .card .card-body {
+    display: flex;
+}
+
+.dialog-content .card .card-body .image {
+    flex: 1;
+}
+
+.dialog-content .card .card-body .image img {
+    width: 100%;
+    height: auto;
+}
+
+.dialog-content .card .card-body .details {
+    flex: 2;
+    padding: 10px;
+}
+
+.dialog-content .card .card-footer {
+    background-color: #f9f9f9;
+    padding: 10px;
+    text-align: right;
+}
+
+.form-fields {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.form-fields mat-form-field {
+    flex: 1;
+    width: 100%;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centriranje vertikalno */
+    gap: 20px;
+    margin-top: 20px;
+    text-align: center; /* Centriranje horizontalno */
+}
+
+.dialog-actions button {
+    background-color: #003580;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center; /* Dodato za centriranje dugmadi vertikalno */
+    margin: 0 5px; /* Dodato padding između dugmadi */
+}
+
+.dialog-actions button.cancel-button {
+    background-color: #951414;
+}
+
+.dialog-actions button:hover {
+    background-color: #002b80;
+}
+
+.dialog-actions button.cancel-button:hover {
+    background-color: #d60000;
+}
+
+h1[mat-dialog-title], h3 {
+    text-align: center;
+    width: 100%;
+}

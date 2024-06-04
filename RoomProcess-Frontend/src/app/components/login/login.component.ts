@@ -30,10 +30,11 @@ export class LoginComponent {
     this.http.post('https://localhost:7047/api/korisnik/Login', this.loginObj).subscribe((res: any )=>{ // stavili URL sa backenda kopiran i prosledili objekat 
       if(res.message == "You logged in successfully"){ // poredimo sa backenda poruku koja se dobija kada je korisnik uspesno ulogovan
         alert("Login success")
-        this.authService.login(res.name, res.transferObject, res.role);//Ovo je dodato zbog AuthServisa da znamo ko je ulogovan
+        this.authService.login(res.name, res.transferObject, res.role, res.korisnikID);//Ovo je dodato zbog AuthServisa da znamo ko je ulogovan
         localStorage.setItem('angular17token', res.transferObject); //ovako cuvamo token u localStorage
         localStorage.setItem('ulogaId', res.role); //ovako cuvamo ulogu u localStorage
         localStorage.setItem('user', res.name); //ovako cuvamo ime u localStorage
+        localStorage.setItem('korisnikId', res.korisnikID); // ovako cuvamo korisnikID
         //Nalzi se u inspect->Application->local storage->http localhost4200
 
         if(res.role == 1){

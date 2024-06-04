@@ -4,11 +4,11 @@ export class Rezervacija {
     rezervacijaId!: number;
     datumDolaska!: Date;
     datumOdlaska!: Date;
-    cena!: number;
-    brojNocenja!: number;
-    potvrda!: boolean;
+    cena?: number;
+    brojNocenja?: number;
+    potvrda?: boolean;
     korisnikId!: number;
-    korisnik!: Korisnik;
+    korisnik?: Korisnik;
     objekatId!: number;
-    objekat!:Objekat
+    objekat?:Objekat
   }

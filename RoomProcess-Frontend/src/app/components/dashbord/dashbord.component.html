@@ -6,14 +6,14 @@
       </span>RoomProcess</div>
       <nav>
         <ul>
-          <li><a routerLink="/home">Home</a></li>
-          <li><a routerLink="/stays">Stays</a></li>
+          <li><a href="home">Home</a></li>
+          <li><a href="dashbord">Stays</a></li>
           <li><a routerLink="#">Flights</a></li>
           <li><a routerLink="#">Car Rentals</a></li>
           <li><a routerLink="#">Attractions</a></li>
           <li><a routerLink="#">Airport Taxis</a></li>
-          <li *ngIf="isLoggedIn()">Welcome, {{ userName }}</li>
-          <li *ngIf="isLoggedIn()"><button (click)="logout()">LogOff</button></li>
+          <li *ngIf="isLoggedIn()"><a (click)="user()">Welcome, {{ userName }}</a></li>
+          <li *ngIf="isLoggedIn()"><a (click)="logout()">LogOff</a></li>
           <li *ngIf="!isLoggedIn()"><a routerLink="/home">Login</a></li>
         </ul>
       </nav>

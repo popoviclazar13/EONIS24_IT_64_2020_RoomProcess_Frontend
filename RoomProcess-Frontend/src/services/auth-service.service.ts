@@ -10,11 +10,13 @@ export class AuthServiceService {
   private loggedIn = false;
   private userName = '';
   private role: number | null = null;
+  private userId: number | null = null;
 
-  login(userName: string, token: string, role: number): void {
+  login(userName: string, token: string, role: number, userId: number): void {
     this.loggedIn = true;
     this.userName = userName;
     this.role = role;
+    this.userId = userId;
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('angular17token', token);
       localStorage.setItem('ulogaId', role.toString());
@@ -29,6 +31,7 @@ export class AuthServiceService {
       localStorage.removeItem('angular17token');
       localStorage.removeItem('ulogaId');
       localStorage.removeItem('user');
+      localStorage.removeItem('korisnikId');
     }
   }
 
@@ -50,6 +53,16 @@ export class AuthServiceService {
       }
     }
     return this.role || 0; // Ako podaci iz lokalnog skladišta nisu dostupni, vraćamo vrednost this.role ili 0 kao podrazumevanu vrednost
+  }
+
+  getUserId(): number {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const localStorageUserId = localStorage.getItem('korisnikId');
+      if (localStorageUserId !== null) {
+        return parseInt(localStorageUserId);
+      }
+    }
+    return this.userId || 0;
   }
 
 }

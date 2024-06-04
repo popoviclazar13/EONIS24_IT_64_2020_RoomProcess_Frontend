@@ -17,6 +17,8 @@ import { RecenzijaService } from '../../../services/recenzija.service';
 import { Recenzija } from '../../../models/recenzija';
 import { Rezervacija } from '../../../models/rezervacija';
 import { RezervacijaService } from '../../../services/rezervacija.service';
+import { ReservationDialogComponent } from '../dialogs/reservation-dialog/reservation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dashbord',
@@ -48,6 +50,7 @@ export class DashboardComponent implements OnInit {
   ratings: number[] = Array.from({length: 10}, (_, i) => i + 1); // Lista ocena od 1 do 10
 
   constructor(private authService: AuthServiceService,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
@@ -231,8 +234,23 @@ export class DashboardComponent implements OnInit {
     this.loadData();
   }
 
-  rezervisi(arg0: number) {
-    throw new Error('Method not implemented.');
+  rezervisi(objekatId: number): void {
+    const selectedObjekat = this.dataSource.find(objekat => objekat.objekatId === objekatId);
+    if (selectedObjekat) {
+      const dialogRef = this.dialog.open(ReservationDialogComponent, {
+        width: '400px',
+        data: { objekat: selectedObjekat, startDate: null, endDate: null }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // Ako želite da uradite nešto nakon zatvaranja dijaloga
+      });
     }
+  }
+
+  user(){
+    this.router.navigateByUrl('/korisnikDashbord');
+  }
 
 }

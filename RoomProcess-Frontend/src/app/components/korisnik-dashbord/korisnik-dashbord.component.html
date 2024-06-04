@@ -1,0 +1,149 @@
+<div class="parent">
+    <header>
+      <div class="container">
+        <div class="logo"><span class="icon">
+          <mat-icon>apartment</mat-icon>
+        </span>RoomProcess</div>
+        <nav>
+          <ul>
+            <li><a href="home">Home</a></li>
+            <li><a href="dashbord">Stays</a></li>
+            <li><a routerLink="#">Flights</a></li>
+            <li><a routerLink="#">Car Rentals</a></li>
+            <li><a routerLink="#">Attractions</a></li>
+            <li><a routerLink="#">Airport Taxis</a></li>
+            <li *ngIf="isLoggedIn()"><a (click)="user()">Welcome, {{ userName }}</a></li>
+            <li *ngIf="isLoggedIn()"><a (click)="logout()">LogOff</a></li>
+            <li *ngIf="!isLoggedIn()"><a routerLink="/home">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  
+    <section class="features">
+        <div class="container">
+          <div class="filter-and-cards">
+            <!-- Kolona za checkboxove -->
+            <!-- Kolona za kartice -->
+            <div class="feature-cards">
+              <!-- Kartica za podatke o korisniku -->
+              <div class="user-card">
+                <div class="card">
+                  <div class="card-header">
+                    <h3>{{ korisnik.ime }}</h3>
+                    <p>{{ korisnik.prezime }}</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="details">
+                      <!-- Detalji korisnika -->
+                      <label for="ime">Ime:</label>
+                        <input id="ime" name="ime" placeholder=korisnik.ime [(ngModel)]="korisnik.ime" type="text" />
+                  
+                        <label for="prezime">Prezime:</label>
+                        <input id="prezime" name="prezime" [(ngModel)]="korisnik.prezime" type="text" />
+                      <label for="email">Email:</label>
+                        <input id="email" [(ngModel)]="korisnik.email" type="email" />
+                  
+                        <label for="password">Password:</label>
+                        <input id="password" [(ngModel)]="korisnik.password" type="text" />
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <!-- Dodatni podaci ili akcije -->
+                    <button (click)="updateUser()">Update</button>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- Kartica za podatke o rezervacijama -->
+              <div class="reservation-card">
+                <div class="card">
+                  <div class="card-header">
+                    <h3>Rezervacije</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="details">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Datum dolaska</th>
+                            <th>Datum odlaska</th>
+                            <th>Objekat</th>
+                            <th>Broj noćenja</th>
+                            <th>Cena</th>
+                            <th>Akcija</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let rezervacija of rezervacije">
+                            <td>{{ rezervacija.datumDolaska | date: 'dd.MM.yyyy.' }}</td>
+                            <td>{{ rezervacija.datumOdlaska | date: 'dd.MM.yyyy.' }}</td>
+                            <td>{{ findObjekat(rezervacija.objekatId) }}</td>
+                            <td>{{ rezervacija.brojNocenja }}</td>
+                            <td>{{ rezervacija.cena }}</td>
+                            <td>
+                              <button (click)="openReviewDialog(1, rezervacija.rezervacijaId)">Ostavi recenziju</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <!-- Dodatni podaci ili akcije -->
+                  </div>
+                </div>
+              </div>
+              <div class="reservation-card">
+                <div class="card">
+                  <div class="card-header">
+                    <h3>Recenzije</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="details">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Datum</th>
+                            <th>Tekst</th>
+                            <th>Lokacija</th>
+                            <th>Cistoca</th>
+                            <th>Osoblje</th>
+                            <th>Sadrzaj</th>
+                            <th>Odnos cene i kvalitet</th>
+                            <th>Ocena</th>
+                            <th>Rezervacija</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let recenzija of recenzije">
+                            <td>{{ recenzija.datum| date: 'dd.MM.yyyy.' }}</td>
+                            <td>{{ recenzija.tekst}}</td>
+                            <td>{{ recenzija.lokacija}}</td>
+                            <td>{{ recenzija.cistoca}}</td>
+                            <td>{{ recenzija.osoblje}}</td>
+                            <td>{{ recenzija.sadrzaj}}</td>
+                            <td>{{ recenzija.cenaKvalitet}}</td>
+                            <td>{{ recenzija.ocena}}</td>
+                            <td>{{ recenzija.rezervacijaId }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <!-- Dodatni podaci ili akcije -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+    <footer>
+      <div class="container">
+        <!-- Footer content -->
+      </div>
+    </footer>
+  </div>

@@ -15,6 +15,7 @@ import { AdminDashbordComponent } from './components/admin-dashbord/admin-dashbo
 import { VlasnikDashbordComponent } from './components/vlasnik-dashbord/vlasnik-dashbord.component';
 //Dodato da bi ako KORISNIK pokusa da pristupi nekoj admin stranici da ga rutira na home!
 import { authGuard } from './auth.guard';
+import { KorisnikDashbordComponent } from './components/korisnik-dashbord/korisnik-dashbord.component';
 //
 
 export const routes: Routes = [
@@ -34,6 +35,7 @@ export const routes: Routes = [
     {path: 'dashbord', component: DashboardComponent},
     {path: 'adminDashbord', component: AdminDashbordComponent, canActivate: [authGuard]},
     {path: 'vlasnikDashbord', component: VlasnikDashbordComponent, canActivate: [authGuard]},
+    {path: 'korisnikDashbord', component: KorisnikDashbordComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full' } // Podrazumevana ruta
 
 ];

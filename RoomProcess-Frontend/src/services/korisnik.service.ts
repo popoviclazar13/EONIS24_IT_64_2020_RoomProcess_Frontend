@@ -38,7 +38,7 @@ export class KorisnikService {
     }
     
     public updateKorisnik(korisnik:Korisnik):Observable<Korisnik>{
-        return this.httpClient.put<Korisnik>(`${this.BASE_URL}`, korisnik)
+        return this.httpClient.put<Korisnik>(`${this.BASE_URL}/${korisnik.korisnikId}`, korisnik)
     }
     
     public deleteKorisnik(id:number):Observable<void>{
