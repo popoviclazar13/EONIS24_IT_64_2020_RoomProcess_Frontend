@@ -1,4 +1,3 @@
-/* Postojeći CSS */
 * {
   margin: 0;
   padding: 0;
@@ -32,27 +31,28 @@ header .container {
 header .logo {
   font-size: 24px;
   font-weight: bold;
+  flex: 1; /* Dodajemo flex: 1 za logo */
+}
+
+header nav {
+  flex: 2; /* Dodajemo flex: 2 za navigaciju */
 }
 
 header nav ul {
   display: flex;
+  justify-content: center; /* Postavljanje na sredinu */
   list-style: none;
+  margin: 0; /* Uklanjanje default margine */
+  padding: 0; /* Uklanjanje default paddinga */
 }
 
 header nav ul li {
-  margin-right: 20px;
+  margin: 0 10px; /* Margina između stavki u navigaciji */
 }
 
-header nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
+header nav ul li a,
 header nav ul li button {
-  background: none;
-  border: none;
   color: #fff;
-  cursor: pointer;
   text-decoration: none;
   padding: 5px 10px;
 }
@@ -195,7 +195,7 @@ footer {
 header nav ul {
   display: flex;
   list-style: none;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 header nav ul li {
@@ -269,4 +269,18 @@ button:active {
   background-color: #f9f9f9;
   padding: 10px;
   text-align: right;
+}
+
+input[type="text"] {
+  width: 150px; /* Postavljanje širine input polja da odgovara dugmićima */
+  padding: 10px; /* Dodavanje unutrašnjeg prostora */
+  font-size: 16px; /* Postavljanje veličine fonta */
+  border: 1px solid #ccc; /* Dodavanje ivice */
+  border-radius: 5px; /* Zaobljavanje ivica */
+  margin-bottom: 10px; /* Dodavanje prostora ispod */
+}
+
+input[type="text"]:focus {
+  border-color: #003580; /* Promena boje ivice prilikom fokusa */
+  outline: none; /* Uklanjanje default outline */
 }

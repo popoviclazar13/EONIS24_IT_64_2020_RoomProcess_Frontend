@@ -37,6 +37,8 @@ import { Rezervacija } from '../../../../models/rezervacija';
 export class Recenzija2DialogComponent {
 
   flag!:number;
+
+  minDate: Date;
   
 
   public korisnik = new Korisnik;
@@ -48,12 +50,13 @@ export class Recenzija2DialogComponent {
     public recenzijaService: RecenzijaService,
     public korisnikService:KorisnikService,
     public rezervacijaService: RezervacijaService){
-
+      this.minDate = new Date();
 }
 
 ngOnInit(): void {
   console.log(this.data);
   this.getKorisnik();
+  this.getRezervacija();
 }
 
 
@@ -62,6 +65,9 @@ ngOnInit(): void {
 }
 
   public add():void{
+    const datumRecenzije = new Date(this.data.datum); // Pretpostavljam da postoji polje datumOstavljanja
+    datumRecenzije.setDate(datumRecenzije.getDate() + 1);
+    this.data.datum = datumRecenzije;
     console.log(this.data);
     this.recenzijaService.addRecenzija(this.data).subscribe(
       () => {
@@ -118,6 +124,19 @@ ngOnInit(): void {
     (error: any) => {
       console.error('Failed to load pozicije', error);
       this.snackBar.open('Neuspešno učitavanje korisnika.', 'Ok', { duration: 3500 });
+    }
+  );
+}
+getRezervacija(): void {
+  this.rezervacijaService.getRezervacijaById(this.data.rezervacijaId).subscribe(
+    (rezervacija: Rezervacija) => {
+      this.rezervacija = rezervacija;
+      // Postavite minDate nakon što se učita datum odlaska rezervacije
+      this.minDate = new Date(this.rezervacija.datumOdlaska);
+    },
+    (error: any) => {
+      console.error('Failed to load rezervacija', error);
+      this.snackBar.open('Neuspešno učitavanje rezervacije.', 'Ok', { duration: 3500 });
     }
   );
 }

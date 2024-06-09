@@ -19,6 +19,9 @@ import { Rezervacija } from '../../../models/rezervacija';
 import { RezervacijaService } from '../../../services/rezervacija.service';
 import { ReservationDialogComponent } from '../dialogs/reservation-dialog/reservation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Oprema } from '../../../models/oprema';
+import { OpremaService } from '../../../services/oprema.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dashbord',
@@ -36,6 +39,10 @@ export class DashboardComponent implements OnInit {
   popusti: Popust[] = [];
   recenzije: Recenzija[] = [];
   rezervacije: Rezervacija[] = [];
+  opremaMap: { [key: number]: Oprema[] } = {};
+
+  minValue!: number | null;
+  maxValue!: number | null;
 
   //selectedTipObjektaId: number = 0; // skladistenje koji tip objekta je chekiran
   //selectedPopustId: number = 0; // skladistenje koji popust je chekiran
@@ -58,7 +65,8 @@ export class DashboardComponent implements OnInit {
     private tipObjektaService: TipObjektaService,
     private popustService: PopustService,
     private recenzijaService: RecenzijaService,
-    private rezervacijaService: RezervacijaService
+    private rezervacijaService: RezervacijaService,
+    private opremaService: OpremaService 
   ) { }
 
   ngOnInit(): void {
@@ -71,6 +79,8 @@ export class DashboardComponent implements OnInit {
 
     //mora na kraju posto ako bude na pocetku, kasnije se poziva loadData koji ce pregaziti podatke!!!
     this.route.queryParams.subscribe(params => {
+      const city = params['city'];
+      const objectName = params['objectName'];
       const query = params['query'];
       const type = params['type'];
       const id = params['id'];
@@ -80,9 +90,13 @@ export class DashboardComponent implements OnInit {
         console.log('Selected ID:', this.selectedId);  // I ovo
         this.onRadioChange();
       }
-      if (query) {
+      if (city) {
+        debugger
         // Ako je upit definisan, pretrazi objekte na osnovu upita
-        this.searchObjects(query);
+        this.searchObjects(city);
+      } else if (objectName){
+        debugger
+        this.searchObjectsByName(objectName);
       }
     });
 
@@ -102,6 +116,7 @@ export class DashboardComponent implements OnInit {
     this.subscription = this.objekatService.getAllObjekat().subscribe(
       (data) => {
         this.dataSource = data;
+        this.loadOpremaForAllObjekti(); // mora ovde posto iz nekog razloga ne hvata lepo duzinu dataSourca ako se stavi u OnInit
       },
       (error: Error) => {
         console.log(error.name + ' ' + error.message);
@@ -132,14 +147,18 @@ export class DashboardComponent implements OnInit {
   }
 
   public getOcenaRecenzije(objekatId: number): string {
+    debugger;
     const relevantRezervacije = this.rezervacije.filter(r => r.objekatId === objekatId);
     const relevantRecenzije = this.recenzije.filter(rec => 
       relevantRezervacije.some(rez => rez.rezervacijaId === rec.rezervacijaId)
     );
-  
+    console.log(this.rezervacije.filter(r => r.objekatId === objekatId));
+    console.log('Relevantne rezervacije:', relevantRezervacije);
+  console.log('Relevantne recenzije:', relevantRecenzije);
     if (relevantRecenzije.length > 0) {
       const sumaOcena = relevantRecenzije.reduce((sum, r) => sum + r.ocena, 0);
       const prosekOcena = sumaOcena / relevantRecenzije.length;
+      console.log('Prosečna ocena:', prosekOcena);
       return prosekOcena.toFixed(2);
     } else {
       return 'Nema ostavljenih recenzija!';
@@ -200,6 +219,24 @@ export class DashboardComponent implements OnInit {
       (data: Objekat[]) => {
         // Ažurirajte dataSource sa dobijenim podacima
         this.dataSource = data;
+        console.log(data);
+      },
+      (error: any) => {
+        console.error('Error searching objects:', error);
+      }
+    );
+  }
+  searchObjectsByName(query: string): void {
+    this.objekatService.getObjekatByNaziv(query).subscribe(
+      (data: any) => {
+        // Proverite da li je data niz
+        if (Array.isArray(data)) {
+          this.dataSource = data;
+        } else {
+          // Ako nije niz, konvertujte ga u niz
+          this.dataSource = [data];
+        }
+        console.log(this.dataSource);
       },
       (error: any) => {
         console.error('Error searching objects:', error);
@@ -215,6 +252,10 @@ export class DashboardComponent implements OnInit {
     this.osobljeChecked = false;
     this.sadrzajChecked = false;
     this.odnosCiKChecked = false;
+
+    //Za cene
+    this.maxValue = null;
+    this.minValue = null;
 
     //Ovo je takodje potrebno
     setTimeout(() => {
@@ -251,6 +292,42 @@ export class DashboardComponent implements OnInit {
 
   user(){
     this.router.navigateByUrl('/korisnikDashbord');
+  }
+
+  filterByPriceRange(): void {
+    debugger
+    if (this.minValue != null && this.maxValue != null) {
+      this.objekatService.getObjekatByPriceRange(this.minValue, this.maxValue).subscribe(
+        (data) => {
+          this.dataSource = data;
+        },
+        (error: Error) => {
+          console.log(error.name + ' ' + error.message);
+        }
+      );
+    }
+  }
+
+  private loadOpremaForAllObjekti() {
+    this.dataSource.forEach(objekat => {
+      this.opremaService.getOpremaByObjekat(objekat.objekatId).subscribe(
+        (data) => {
+          this.opremaMap[objekat.objekatId] = data;
+          console.log(this.opremaMap)
+        },
+        (error: Error) => {
+          if (error.message.includes('404')) {
+            console.log(`Objekat sa ID ${objekat.objekatId} trenutno nema nikakvu opremu!`);
+          } else {
+            console.log(error.name + ' ' + error.message);
+          }
+        }
+      );
+    });
+  }
+
+  getOpremaZaObjekat(objekatId: number): Oprema[] {
+    return this.opremaMap[objekatId] || [];
   }
 
 }

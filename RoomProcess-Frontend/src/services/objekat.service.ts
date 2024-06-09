@@ -21,7 +21,7 @@ export class ObjekatService {
     BASE_URL = `${environment.apiUrl}/objekat`;
     OBJEKAT_BY_Grad = `${this.BASE_URL}/byGrad`;
     OBJEKAT_BY_Naziv = `${this.BASE_URL}/byNaziv`;
-    OBJEKAT_BY_PriceRange = `${this.BASE_URL}/byPriceRange`;
+    OBJEKAT_BY_PriceRange = `${this.BASE_URL}/priceRange`;
     OBJEKAT_BY_KORISNIK = `${this.BASE_URL}/byKorisnik`;
     OBJEKAT_BY_TIPOBJEKTA = `${this.BASE_URL}/byTipObjekta`;
     OBJEKAT_BY_POPUST = `${this.BASE_URL}/byPopust`;

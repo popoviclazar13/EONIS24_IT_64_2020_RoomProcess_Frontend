@@ -18,6 +18,9 @@ import { RezervacijaService } from '../../../../services/rezervacija.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 //
+//ZA STRIPE
+import { StripeService } from '../../../../services/stripe.service';
+//
 
 @Component({
   selector: 'app-reservation-dialog',
@@ -37,6 +40,8 @@ import { Router } from '@angular/router';
 })
 export class ReservationDialogComponent {
 
+  minDate: Date;
+
   recenzije: Recenzija[] = [];
   rezervacije: Rezervacija[] = [];
   subscription!: Subscription;
@@ -48,7 +53,10 @@ export class ReservationDialogComponent {
     public recenzijaService: RecenzijaService,
     public rezervacijaService: RezervacijaService,
     private router: Router,
-  ) {}
+    private stripeService: StripeService // Dodajte ovde StripeService
+  ) {
+    this.minDate = new Date(); // Postavlja minDate na današnji datum
+  }
 
   ngOnInit(): void {
     this.loadRezervacije();
@@ -113,14 +121,29 @@ export class ReservationDialogComponent {
       console.log('Kreirana rezervacija:', this.novaRezervacija.datumDolaska);
       console.log('Kreirana rezervacija:', this.novaRezervacija.datumOdlaska);
 
-      const totalPrice = this.novaRezervacija.cena;
+      const totalPrice = this.novaRezervacija.cena ?? 0;
+
+      console.log(totalPrice);
+      this.stripeService.createCheckoutSession(totalPrice).subscribe(
+        (stripeResponse) => {
+          const sessionId = stripeResponse.sessionId;
+          console.log('Session ID:', stripeResponse.sessionId); // Ovde možete koristiti dobijeni Session ID
+          // Redirect korisnika na Checkout stranicu koristeći dobijeni Session ID
+          //window.location.href = `https://checkout.stripe.com/pay/${sessionId}`;
+          window.location.href = `${sessionId}`;
+        },
+        (stripeError) => {
+          console.error('Greška prilikom kreiranja sesije na Stripe-u:', stripeError);
+        }
+      );
 
       // Zatvaranje dijaloškog prozora
       this.dialogRef.close();
 
       // Prikazivanje snack bara sa porukom i opcijom 'Ok'
-      this.snackBar.open(`Rezervacija uspešno kreirana! Ukupna cena: ${totalPrice}`, 'Ok', { duration: 5000 });
-      console.log(this.novaRezervacija);
+      //this.snackBar.open(`Rezervacija uspešno kreirana! Ukupna cena: ${totalPrice}`, 'Ok', { duration: 5000 });
+      //console.log(this.novaRezervacija);
+
     },
     (error) => {
       // Greška prilikom kreiranja rezervacije, prikazivanje poruke o grešci u snack baru

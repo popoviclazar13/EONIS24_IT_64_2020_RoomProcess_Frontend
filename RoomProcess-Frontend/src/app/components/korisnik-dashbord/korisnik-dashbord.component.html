@@ -8,10 +8,12 @@
           <ul>
             <li><a href="home">Home</a></li>
             <li><a href="dashbord">Stays</a></li>
-            <li><a routerLink="#">Flights</a></li>
-            <li><a routerLink="#">Car Rentals</a></li>
-            <li><a routerLink="#">Attractions</a></li>
-            <li><a routerLink="#">Airport Taxis</a></li>
+            <li><a routerLink="#"></a></li>
+            <li><a routerLink="#"></a></li>
+            <li><a routerLink="#"></a></li>
+            <li><a routerLink="#"> </a></li>
+            <li><a routerLink="#"></a></li>
+            <li><a routerLink="#"> </a></li>
             <li *ngIf="isLoggedIn()"><a (click)="user()">Welcome, {{ userName }}</a></li>
             <li *ngIf="isLoggedIn()"><a (click)="logout()">LogOff</a></li>
             <li *ngIf="!isLoggedIn()"><a routerLink="/home">Login</a></li>
