@@ -27,9 +27,12 @@ export class StripeService {
     const url = `${this.baseUrl}/create-checkout-session`; // Formiranje URL-a
     return this.httpClient.post<any>(url, { cena, apiKey: environment.stripeApiKey }, { headers: this.headers }); // Poziv post metode sa telom zahteva koje sadrži samo cenu
   }*/
-  public createCheckoutSession(cena: number): Observable<any> {
-    const url = `${this.baseUrl}/create-checkout-session?cena=${cena}`; // Dodavanje cene u URL
+  public createCheckoutSession(cena: number, rezervacijaId:number): Observable<any> {
+    const url = `${this.baseUrl}/create-checkout-session?cena=${cena}&rezervacijaId=${rezervacijaId}`; // Dodavanje cene u URL
     return this.httpClient.post<any>(url, null, { headers: this.headers }); // Postavljanje tela zahteva na null jer se podaci sada šalju preko URL-a
+  }
+  fetchWebhookContent(): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseUrl}/webhook`, {});
   }
 
 }

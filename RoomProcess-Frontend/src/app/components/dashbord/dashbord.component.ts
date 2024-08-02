@@ -147,18 +147,13 @@ export class DashboardComponent implements OnInit {
   }
 
   public getOcenaRecenzije(objekatId: number): string {
-    debugger;
     const relevantRezervacije = this.rezervacije.filter(r => r.objekatId === objekatId);
     const relevantRecenzije = this.recenzije.filter(rec => 
       relevantRezervacije.some(rez => rez.rezervacijaId === rec.rezervacijaId)
     );
-    console.log(this.rezervacije.filter(r => r.objekatId === objekatId));
-    console.log('Relevantne rezervacije:', relevantRezervacije);
-  console.log('Relevantne recenzije:', relevantRecenzije);
     if (relevantRecenzije.length > 0) {
       const sumaOcena = relevantRecenzije.reduce((sum, r) => sum + r.ocena, 0);
       const prosekOcena = sumaOcena / relevantRecenzije.length;
-      console.log('Prosečna ocena:', prosekOcena);
       return prosekOcena.toFixed(2);
     } else {
       return 'Nema ostavljenih recenzija!';
@@ -313,7 +308,6 @@ export class DashboardComponent implements OnInit {
       this.opremaService.getOpremaByObjekat(objekat.objekatId).subscribe(
         (data) => {
           this.opremaMap[objekat.objekatId] = data;
-          console.log(this.opremaMap)
         },
         (error: Error) => {
           if (error.message.includes('404')) {

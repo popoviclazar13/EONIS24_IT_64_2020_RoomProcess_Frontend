@@ -41,6 +41,7 @@ import { StripeService } from '../../../../services/stripe.service';
 export class ReservationDialogComponent {
 
   minDate: Date;
+  message: string;
 
   recenzije: Recenzija[] = [];
   rezervacije: Rezervacija[] = [];
@@ -56,6 +57,7 @@ export class ReservationDialogComponent {
     private stripeService: StripeService // Dodajte ovde StripeService
   ) {
     this.minDate = new Date(); // Postavlja minDate na današnji datum
+    this.message = '';
   }
 
   ngOnInit(): void {
@@ -122,9 +124,10 @@ export class ReservationDialogComponent {
       console.log('Kreirana rezervacija:', this.novaRezervacija.datumOdlaska);
 
       const totalPrice = this.novaRezervacija.cena ?? 0;
+      const rezervacijaTotalId = this.novaRezervacija.rezervacijaId;
 
       console.log(totalPrice);
-      this.stripeService.createCheckoutSession(totalPrice).subscribe(
+      this.stripeService.createCheckoutSession(totalPrice, rezervacijaTotalId).subscribe(
         (stripeResponse) => {
           const sessionId = stripeResponse.sessionId;
           console.log('Session ID:', stripeResponse.sessionId); // Ovde možete koristiti dobijeni Session ID
@@ -185,6 +188,20 @@ export class ReservationDialogComponent {
       },
       (error: Error) => {
         console.log(error.name + ' ' + error.message);
+      }
+    );
+  }
+  handleStripeWebhookEvent(): void {
+    debugger;
+    this.stripeService.fetchWebhookContent().subscribe(
+      response => {
+        this.message = response.message;
+        console.log(this.message);
+        // Ovde možete obraditi druge podatke ako su potrebni
+      },
+      error => {
+        console.error('Greška prilikom dohvatanja podataka sa servera:', error);
+        // Obrada greške
       }
     );
   }
